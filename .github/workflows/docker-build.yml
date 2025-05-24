@@ -25,6 +25,12 @@ jobs:
             type=semver,pattern={{version}}
             type=sha,format=short,prefix=sha-
 
+      - name: Extract first image tag
+        id: extract_tag
+        run: |
+          FIRST_TAG=$(echo "${{ steps.meta.outputs.tags }}" | cut -d ',' -f1)
+          echo "first_tag=$FIRST_TAG" >> $GITHUB_OUTPUT
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -65,7 +71,7 @@ jobs:
       - name: Scan built image for CVEs
         uses: aquasecurity/trivy-action@0.28.0
         with:
-          image-ref: ghcr.io/${{ github.repository_owner }}/pawchozad2:${{ steps.meta.outputs.tags }}
+          image-ref: ghcr.io/${{ github.repository_owner }}/pawchozad2:${{ steps.extract_tag.outputs.first_tag }}
           format: "table"
           exit-code: "1"
           severity: "CRITICAL,HIGH"
