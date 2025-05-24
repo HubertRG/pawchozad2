@@ -10,7 +10,7 @@
   - Tryb `mode=max` – pełna synchronizacja warstw builda
 
 **Uzasadnienie**:  
-Tagowanie semver pozwala na czytelne zarządzanie wersjami i zgodność z release’ami, a hash commita gwarantuje unikalność i możliwość debugowania konkretnego builda. Oddzielny repozytorium cache przyspiesza kolejne buildy, zmniejsza zużycie transferu i korzysta z publicznych repozytoriów DockerHub.
+Tagowanie semantyczne pozwala na czytelne zarządzanie wersjami i zgodność z release’ami, a hash commita gwarantuje unikalność i możliwość debugowania konkretnego builda. Oddzielny repozytorium cache przyspiesza kolejne buildy, zmniejsza zużycie transferu i korzysta z publicznych repozytoriów DockerHub.
 
 ---
 
