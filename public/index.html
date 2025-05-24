@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pogoda</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Aplikacja pogodowa</h1>
+    <form id="form">
+        <select id="miasto" required>
+            <option value="">Wybierz miasto</option>
+            <option>Warszawa</option>
+            <option>Kraków</option>
+            <option>Lublin</option>
+            <option>Wrocław</option>
+        </select>
+        <button type="submit">Pokaż pogodę</button>
+    </form>
+    
+    <div id="wynik"></div>
+
+    <script>
+        document.getElementById('form').onsubmit = async (e) => {
+            e.preventDefault();
+            const wynik = document.getElementById('wynik');
+            wynik.innerHTML = 'Ładowanie...';
+            
+            try {
+                const response = await fetch('/api/pogoda', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        miasto: document.getElementById('miasto').value.trim()
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if(data.error) throw new Error(data.error);
+                
+                wynik.innerHTML = `
+                    <h2>Pogoda w ${document.getElementById('miasto').value}</h2>
+                    <p>Aktualna temperatura: ${Math.round(data.temp)}°C</p>
+                    <p>Wilgotność: ${data.wilgotnosc}%</p>
+                    <p>Ciśnienie: ${data.cisnienie} hPa</p>
+                    <p>Prędkość wiatru: ${data.wiatr} m/s</p>
+                `;
+            } catch (error) {
+                wynik.innerHTML = `Błąd: ${error.message}`;
+            }
+        };
+    </script>
+</body>
+</html>
