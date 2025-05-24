@@ -57,9 +57,9 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           cache-from: |
-            type=registry,ref=docker.io/${{ vars.DOCKERHUB_USER }}/pawchozad2:latest
+            type=registry,ref=docker.io/${{ vars.DOCKERHUB_USERNAME }}/pawchozad2:latest
           cache-to: |
-            type=registry,ref=docker.io/${{ vars.DOCKERHUB_USER }}/pawchozad2:latest,mode=max
+            type=registry,ref=docker.io/${{ vars.DOCKERHUB_USERNAME }}/pawchozad2:latest,mode=max
           tags: ${{ steps.meta.outputs.tags }}
 
       - name: Scan built image for CVEs
